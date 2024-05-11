@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1003723358179",
+    "project_id": "juanjoaguadotfc",
+    "storage_bucket": "juanjoaguadotfc.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1003723358179:android:4c67514c3d285757256ad6",
+        "android_client_info": {
+          "package_name": "com.juanjo.example.juanjoaguado_tfc"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCJswovbBeyp5BPitGmfvsO5OznqG0PbQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
