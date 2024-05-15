@@ -16,7 +16,6 @@
 
         <activity android:name=".RegistroActivity"/>
 
-
         <activity
             android:name=".MainActivity"
             android:exported="true"/>
@@ -30,6 +29,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
+        <!-- Añadir el resto de activities aquí -->
+        <activity android:name=".AdminActivity" />
+        <!-- Añade más actividades según sea necesario -->
 
     </application>
 

@@ -19,17 +19,19 @@
         android:id="@+id/editTextCorreo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Correo electrónico"
         android:inputType="textEmailAddress"
-        android:layout_marginTop="16dp"/>
+        android:minHeight="48dp" />
 
     <EditText
         android:id="@+id/editTextContraseña"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        android:layout_marginTop="16dp"/>
+        android:minHeight="48dp" />
 
     <Button
         android:id="@+id/buttonRegistrarse"

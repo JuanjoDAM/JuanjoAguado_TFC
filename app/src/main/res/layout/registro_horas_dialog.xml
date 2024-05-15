@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="16dp">
+
+    <TextView
+        android:id="@+id/textViewDate"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Fecha seleccionada"
+        android:textSize="28sp"
+        android:textStyle="bold"
+        android:textColor="#FF5722"
+        android:layout_centerHorizontal="true"/>
+
+    <EditText
+        android:id="@+id/editTextStartTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Hora de inicio (HH:mm)"
+        android:inputType="time"
+        android:textColor="#FF5722"
+        android:textSize="20sp"
+        android:layout_below="@id/textViewDate"/>
+
+    <EditText
+        android:id="@+id/editTextEndTime"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Hora de fin (HH:mm)"
+        android:inputType="time"
+        android:textColor="#FF5722"
+        android:textSize="20sp"
+        android:layout_below="@id/editTextStartTime"
+        android:layout_marginTop="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextBreakHours"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Horas de descanso"
+        android:inputType="numberDecimal"
+        android:textColor="#FF5722"
+        android:textSize="20sp"
+        android:layout_below="@id/editTextEndTime"
+        android:layout_marginTop="16dp"/>
+
+    <TextView
+        android:id="@+id/textViewWorkedToday"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="¿Has trabajado hoy?"
+        android:textSize="24sp"
+        android:textColor="#FF5722"
+        android:layout_below="@id/editTextBreakHours"
+        android:layout_marginTop="16dp"/>
+
+    <Button
+        android:id="@+id/buttonWorkedYes"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewWorkedToday"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="32dp"
+        android:backgroundTint="#4CAF50"
+        android:padding="12dp"
+        android:stateListAnimator="@null"
+        android:text="✔"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/buttonWorkedNo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/textViewWorkedToday"
+        android:layout_marginTop="32dp"
+        android:layout_toStartOf="@id/buttonWorkedYes"
+        android:backgroundTint="#F44336"
+        android:padding="12dp"
+        android:stateListAnimator="@null"
+        android:text="✘"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/buttonWorkedYes"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:backgroundTint="#2196F3"
+        android:padding="12dp"
+        android:stateListAnimator="@null"
+        android:text="Save"
+        android:textColor="#FFFFFF"
+        android:textSize="24sp" />
+</RelativeLayout>
+
+
+
