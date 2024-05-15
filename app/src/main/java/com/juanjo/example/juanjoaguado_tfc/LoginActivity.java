@@ -73,7 +73,7 @@ public class LoginActivity extends AppCompatActivity {
         });
 
 
-        // Configurar onClickListener para el botón de registrarse
+
         // Configurar onClickListener para el botón de registrarse
         buttonRegistrarse.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,6 +90,8 @@ public class LoginActivity extends AppCompatActivity {
         // Aquí puedes agregar la lógica para manejar el registro de usuario
         // Por ejemplo, abrir una nueva actividad para el registro de usuario
     }
+
+    // Dentro del método iniciarSesion en LoginActivity.java
 
     private void iniciarSesion() {
         String email = editTextEmail.getText().toString().trim();
@@ -111,8 +113,18 @@ public class LoginActivity extends AppCompatActivity {
             @Override
             public void onSuccess() {
                 // Inicio de sesión exitoso
-                // Puedes redirigir al usuario a la siguiente actividad o realizar otras acciones
-                Toast.makeText(getApplicationContext(), "Inicio de sesión exitoso", Toast.LENGTH_SHORT).show();
+                // Verificar si el usuario es administrador
+                if (email.equals("admin@admin.com")) {
+                    // El usuario es administrador, redirigir a la actividad de administrador
+                    Intent intent = new Intent(LoginActivity.this, AdminActivity.class);
+                    startActivity(intent);
+                    finish(); // Finalizar LoginActivity para evitar volver atrás
+                } else {
+                    // El usuario no es administrador, redirigir a la actividad principal
+                    Intent intent = new Intent(LoginActivity.this, MainActivity.class);
+                    startActivity(intent);
+                    finish(); // Finalizar LoginActivity para evitar volver atrás
+                }
             }
 
             @Override
@@ -122,4 +134,5 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
 }
