@@ -14,8 +14,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 public class RegistroHorasDialog extends DialogFragment {
 
@@ -64,8 +70,16 @@ public class RegistroHorasDialog extends DialogFragment {
             return;
         }
 
-        // Obtener el ID único para la entrada en la base de datos
-        String id = databaseReference.push().getKey();
+        // Obtener la fecha actual en el formato deseado (día-mes-año)
+        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
+        String currentDate = sdf.format(new Date());
+
+        // Obtener el nombre de usuario del usuario actual
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String username = currentUser != null ? currentUser.getEmail() : "";
+
+        // Construir el ID único para la entrada en la base de datos
+        String id = currentDate + "_" + username.replace(".", "_"); // Reemplazar "." por "_" en el nombre de usuario
 
         // Crear un objeto HorasTrabajo con los datos ingresados
         HorasTrabajo horasTrabajo = new HorasTrabajo(id, startTime, endTime, breakHours);
@@ -77,4 +91,6 @@ public class RegistroHorasDialog extends DialogFragment {
 
         dismiss(); // Cerrar el diálogo después de guardar los datos
     }
+
+
 }

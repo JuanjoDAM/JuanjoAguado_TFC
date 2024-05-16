@@ -17,6 +17,39 @@ public class HorasTrabajo {
         this.breakHours = breakHours;
     }
 
-    // Getters y setters
+    // Getters
+    public String getId() {
+        return id;
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public String getEndTime() {
+        return endTime;
+    }
+
+    public String getBreakHours() {
+        return breakHours;
+    }
+
+    // Setters
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+    }
+
+    public void setBreakHours(String breakHours) {
+        this.breakHours = breakHours;
+    }
 }
+
 
