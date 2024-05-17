@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- activity_main.xml -->
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:gravity="center">
 
     <Button
         android:id="@+id/buttonRegistrarHoras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Registrar Horas"
-        android:layout_centerInParent="true"/>
+        android:text="Registrar Horas" />
 
-</RelativeLayout>
+    <Button
+        android:id="@+id/buttonBajasVacaciones"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bajas y Vacaciones"
+        android:layout_marginTop="16dp" />
+
+    <Button
+        android:id="@+id/buttonNominas"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Nóminas"
+        android:layout_marginTop="16dp" />
+
+</LinearLayout>
+
+

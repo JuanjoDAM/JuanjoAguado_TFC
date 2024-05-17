@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+    <RadioGroup
+        android:id="@+id/radioGroupTipo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginBottom="16dp">
+
+        <RadioButton
+            android:id="@+id/radioButtonBaja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Baja" />
+
+        <RadioButton
+            android:id="@+id/radioButtonVacaciones"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Vacaciones" />
+    </RadioGroup>
+
+    <DatePicker
+        android:id="@+id/datePickerInicio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="calendar"
+        android:layout_marginBottom="16dp"/>
+
+    <DatePicker
+        android:id="@+id/datePickerFin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:calendarViewShown="false"
+        android:datePickerMode="calendar"
+        android:layout_marginBottom="16dp"/>
+
+    <EditText
+        android:id="@+id/editTextMotivo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="Motivo de la solicitud"
+        android:inputType="textMultiLine"
+        android:minLines="3"
+        android:gravity="start|top"
+        android:layout_marginBottom="16dp"/>
+
+    <Button
+        android:id="@+id/buttonEnviar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Enviar solicitud"/>
+
+</LinearLayout>
+</ScrollView>
