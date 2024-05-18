@@ -25,6 +25,12 @@
         <activity android:name=".SeleccionarEmpleadoActivity" />
         <activity android:name=".NominasActivity" />
         <activity android:name=".AdminSolicitudesActivity" />
+        <activity android:name=".DetallesSolicitudActivity" />
+        <activity android:name=".VerSolicitudesActivity" />
+
+
+
+
 
 
 

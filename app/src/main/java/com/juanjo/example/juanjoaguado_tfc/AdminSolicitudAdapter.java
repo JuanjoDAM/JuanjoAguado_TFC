@@ -3,7 +3,6 @@ package com.juanjo.example.juanjoaguado_tfc;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
@@ -13,7 +12,17 @@ import java.util.List;
 
 
 
-public class SolicitudAdapter extends RecyclerView.Adapter<SolicitudAdapter.SolicitudViewHolder> {
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.RecyclerView;
+
+import java.util.List;
+
+public class AdminSolicitudAdapter extends RecyclerView.Adapter<AdminSolicitudAdapter.SolicitudViewHolder> {
 
     public interface OnItemClickListener {
         void onItemClick(Solicitud solicitud);
@@ -22,7 +31,7 @@ public class SolicitudAdapter extends RecyclerView.Adapter<SolicitudAdapter.Soli
     private List<Solicitud> solicitudList;
     private OnItemClickListener listener;
 
-    public SolicitudAdapter(List<Solicitud> solicitudList, OnItemClickListener listener) {
+    public AdminSolicitudAdapter(List<Solicitud> solicitudList, OnItemClickListener listener) {
         this.solicitudList = solicitudList;
         this.listener = listener;
     }
@@ -46,16 +55,19 @@ public class SolicitudAdapter extends RecyclerView.Adapter<SolicitudAdapter.Soli
     }
 
     public static class SolicitudViewHolder extends RecyclerView.ViewHolder {
-        private TextView textViewSolicitud;
+        private TextView textViewEmail, textViewEstado;
 
         public SolicitudViewHolder(@NonNull View itemView) {
             super(itemView);
-            textViewSolicitud = itemView.findViewById(R.id.textViewSolicitud);
+            textViewEmail = itemView.findViewById(R.id.textViewEmail);
+            textViewEstado = itemView.findViewById(R.id.textViewEstado);
         }
 
         public void bind(final Solicitud solicitud, final OnItemClickListener listener) {
-            textViewSolicitud.setText(solicitud.getMotivo() + " (" + solicitud.getEstado() + ")");
+            textViewEmail.setText(solicitud.getUserId());
+            textViewEstado.setText(solicitud.getEstado());
             itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
                 public void onClick(View v) {
                     listener.onItemClick(solicitud);
                 }
@@ -63,5 +75,6 @@ public class SolicitudAdapter extends RecyclerView.Adapter<SolicitudAdapter.Soli
         }
     }
 }
+
 
 

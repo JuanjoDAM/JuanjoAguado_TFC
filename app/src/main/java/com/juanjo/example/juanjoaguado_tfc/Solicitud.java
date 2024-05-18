@@ -1,7 +1,11 @@
 package com.juanjo.example.juanjoaguado_tfc;
 
 
-public class Solicitud {
+import java.io.Serializable;
+
+import java.io.Serializable;
+
+public class Solicitud implements Serializable {
     private String id;
     private String userId;
     private String tipo;
@@ -11,9 +15,8 @@ public class Solicitud {
     private String estado;
     private String comentario;
 
-    // Constructor vacío para Firebase
-    public Solicitud() {
-    }
+    // Constructor vacío requerido para Firebase
+    public Solicitud() {}
 
     public Solicitud(String id, String userId, String tipo, String fechaInicio, String fechaFin, String motivo, String estado, String comentario) {
         this.id = id;
@@ -27,6 +30,7 @@ public class Solicitud {
     }
 
     // Getters y setters
+
     public String getId() {
         return id;
     }
@@ -91,4 +95,6 @@ public class Solicitud {
         this.comentario = comentario;
     }
 }
+
+
 

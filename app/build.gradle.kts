@@ -34,6 +34,7 @@ android {
 }
 
 dependencies {
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
 
 
     implementation("com.google.firebase:firebase-analytics")

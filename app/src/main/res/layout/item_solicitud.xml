@@ -6,9 +6,25 @@
     android:padding="16dp">
 
     <TextView
+        android:id="@+id/textViewEmail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Email"
+        android:textSize="18sp" />
+
+    <TextView
+        android:id="@+id/textViewEstado"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Estado"
+        android:textSize="18sp" />
+
+    <TextView
         android:id="@+id/textViewSolicitud"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
+        android:text="Solicitud"
+        android:textSize="16sp" />
 </LinearLayout>
+
 

@@ -1,5 +1,6 @@
 package com.juanjo.example.juanjoaguado_tfc;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -19,7 +20,7 @@ public class BajasVacacionesActivity extends AppCompatActivity {
     private EditText editTextMotivo;
     private RadioGroup radioGroupTipo;
     private DatePicker datePickerInicio, datePickerFin;
-    private Button buttonEnviar;
+    private Button buttonEnviar, buttonVerSolicitudes;
 
     private DatabaseReference databaseReference;
 
@@ -33,6 +34,7 @@ public class BajasVacacionesActivity extends AppCompatActivity {
         datePickerInicio = findViewById(R.id.datePickerInicio);
         datePickerFin = findViewById(R.id.datePickerFin);
         buttonEnviar = findViewById(R.id.buttonEnviar);
+        buttonVerSolicitudes = findViewById(R.id.buttonVerSolicitudes);
 
         databaseReference = FirebaseDatabase.getInstance().getReference("solicitudes_bajas_vacaciones");
 
@@ -40,6 +42,13 @@ public class BajasVacacionesActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 enviarSolicitud();
+            }
+        });
+
+        buttonVerSolicitudes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                abrirActividadVerSolicitudes();
             }
         });
     }
@@ -55,22 +64,18 @@ public class BajasVacacionesActivity extends AppCompatActivity {
             return;
         }
 
-        // Obtener el nombre de usuario del usuario actual
         String username = FirebaseAuth.getInstance().getCurrentUser().getEmail();
         if (username == null) {
             Toast.makeText(this, "No se pudo obtener el nombre de usuario", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Construir el ID único para la entrada en la base de datos
         String solicitudId = username.replace(".", "_") + "_" + inicio + "_" + fin;
 
-        if (solicitudId != null) {
-            Solicitud solicitud = new Solicitud(solicitudId, username, tipo, inicio, fin, motivo, "pendiente", "");
-            databaseReference.child(solicitudId).setValue(solicitud);
-            Toast.makeText(this, "Solicitud enviada", Toast.LENGTH_SHORT).show();
-            finish();
-        }
+        Solicitud solicitud = new Solicitud(solicitudId, username, tipo, inicio, fin, motivo, "pendiente", "");
+        databaseReference.child(solicitudId).setValue(solicitud);
+        Toast.makeText(this, "Solicitud enviada", Toast.LENGTH_SHORT).show();
+        finish();
     }
 
     private String obtenerTipoSeleccionado() {
@@ -86,9 +91,15 @@ public class BajasVacacionesActivity extends AppCompatActivity {
 
     private String obtenerFecha(DatePicker datePicker) {
         int dia = datePicker.getDayOfMonth();
-        int mes = datePicker.getMonth() + 1; // Se suma 1 porque enero es 0
+        int mes = datePicker.getMonth() + 1;
         int anio = datePicker.getYear();
         return dia + "-" + mes + "-" + anio;
     }
+
+    private void abrirActividadVerSolicitudes() {
+        Intent intent = new Intent(BajasVacacionesActivity.this, VerSolicitudesActivity.class);
+        startActivity(intent);
+    }
 }
+
 

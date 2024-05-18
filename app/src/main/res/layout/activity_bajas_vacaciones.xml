@@ -61,5 +61,13 @@
         android:layout_height="wrap_content"
         android:text="Enviar solicitud"/>
 
-</LinearLayout>
+        <Button
+            android:id="@+id/buttonVerSolicitudes"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Ver solicitudes"/>
+
+
+
+    </LinearLayout>
 </ScrollView>
