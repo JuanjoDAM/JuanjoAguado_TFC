@@ -24,6 +24,7 @@ public class AdminActivity extends AppCompatActivity {
     private static final int SELECT_EMPLOYEE_REQUEST = 2;
 
     private Button buttonSeleccionarEmpleado;
+    private Button buttonVerSolicitudes;
     private FirebaseStorage storage;
     private String selectedEmployeeEmail;
     private Uri pdfUri;
@@ -42,7 +43,19 @@ public class AdminActivity extends AppCompatActivity {
                 seleccionarEmpleado();
             }
         });
+
+        buttonVerSolicitudes = findViewById(R.id.buttonVerSolicitudes);
+        buttonVerSolicitudes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navegar a AdminSolicitudesActivity para ver las solicitudes de baja/vacaciones
+                Intent intent = new Intent(AdminActivity.this, AdminSolicitudesActivity.class);
+                startActivity(intent);
+            }
+        });
     }
+
+
 
     private void seleccionarEmpleado() {
         Intent intent = new Intent(this, SeleccionarEmpleadoActivity.class);

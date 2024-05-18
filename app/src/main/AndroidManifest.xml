@@ -24,6 +24,8 @@
         <activity android:name=".SubirNominaActivity" />
         <activity android:name=".SeleccionarEmpleadoActivity" />
         <activity android:name=".NominasActivity" />
+        <activity android:name=".AdminSolicitudesActivity" />
+
 
 
 

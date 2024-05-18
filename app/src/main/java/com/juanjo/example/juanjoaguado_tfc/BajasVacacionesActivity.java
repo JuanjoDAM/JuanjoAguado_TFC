@@ -8,14 +8,11 @@ import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
-import java.util.Calendar;
 
 public class BajasVacacionesActivity extends AppCompatActivity {
 
@@ -75,10 +72,6 @@ public class BajasVacacionesActivity extends AppCompatActivity {
             finish();
         }
     }
-
-
-
-
 
     private String obtenerTipoSeleccionado() {
         int tipoId = radioGroupTipo.getCheckedRadioButtonId();
