@@ -1,21 +1,21 @@
 package com.juanjo.example.juanjoaguado_tfc;
 
-import android.app.AlertDialog;
-import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.DialogFragment;
 
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
@@ -25,72 +25,74 @@ import java.util.Locale;
 
 public class RegistroHorasDialog extends DialogFragment {
 
-    private EditText editTextStartTime, editTextEndTime, editTextBreakHours;
+    private TextView textViewDate;
+    private EditText editTextStartTime;
+    private EditText editTextEndTime;
+    private EditText editTextBreakHours;
     private Button buttonSave;
-
+    private Button buttonWorkedYes;
+    private Button buttonWorkedNo;
     private DatabaseReference databaseReference;
 
-    @NonNull
+    @Nullable
     @Override
-    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
-        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = requireActivity().getLayoutInflater();
-        View view = inflater.inflate(R.layout.registro_horas_dialog, null);
+    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        View view = inflater.inflate(R.layout.dialog_registro_horas, container, false);
 
-        builder.setView(view)
-                .setTitle("Registro de Horas")
-                .setNegativeButton("Cancelar", (dialog, which) -> dismiss());
-
+        textViewDate = view.findViewById(R.id.textViewDate);
         editTextStartTime = view.findViewById(R.id.editTextStartTime);
         editTextEndTime = view.findViewById(R.id.editTextEndTime);
         editTextBreakHours = view.findViewById(R.id.editTextBreakHours);
         buttonSave = view.findViewById(R.id.buttonSave);
+        buttonWorkedYes = view.findViewById(R.id.buttonWorkedYes);
+        buttonWorkedNo = view.findViewById(R.id.buttonWorkedNo);
 
-        // Inicializar Firebase Realtime Database
         databaseReference = FirebaseDatabase.getInstance().getReference("horas_trabajo");
 
-        buttonSave.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                guardarDatos();
-            }
+        // Set current date
+        String currentDate = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault()).format(new Date());
+        textViewDate.setText(currentDate);
+
+        buttonSave.setOnClickListener(v -> guardarHoras());
+
+        buttonWorkedYes.setOnClickListener(v -> {
+            buttonWorkedYes.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.colorSelected));
+            buttonWorkedNo.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.colorUnselected));
         });
 
-        return builder.create();
+        buttonWorkedNo.setOnClickListener(v -> {
+            buttonWorkedYes.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.colorUnselected));
+            buttonWorkedNo.setBackgroundTintList(ContextCompat.getColorStateList(requireContext(), R.color.colorSelected));
+        });
+
+        return view;
     }
 
-    private void guardarDatos() {
+    private void guardarHoras() {
         String startTime = editTextStartTime.getText().toString().trim();
         String endTime = editTextEndTime.getText().toString().trim();
-        String breakHours = editTextBreakHours.getText().toString().trim();
+        String breakHoursStr = editTextBreakHours.getText().toString().trim();
 
-        // Validar que se hayan ingresado los datos
-        if (TextUtils.isEmpty(startTime) || TextUtils.isEmpty(endTime) || TextUtils.isEmpty(breakHours)) {
-            Toast.makeText(getContext(), "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
+        if (TextUtils.isEmpty(startTime) || TextUtils.isEmpty(endTime) || TextUtils.isEmpty(breakHoursStr)) {
+            Toast.makeText(getActivity(), "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
             return;
         }
 
-        // Obtener la fecha actual en el formato deseado (día-mes-año)
-        SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy", Locale.getDefault());
-        String currentDate = sdf.format(new Date());
+        String username = FirebaseAuth.getInstance().getCurrentUser().getEmail();
+        String currentDate = textViewDate.getText().toString();
 
-        // Obtener el nombre de usuario del usuario actual
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String username = currentUser != null ? currentUser.getEmail() : "";
+        if (username != null) {
+            String id = currentDate + "_" + username.replace(".", "_");
+            DatabaseReference entryRef = databaseReference.child(id);
+            entryRef.child("startTime").setValue(startTime);
+            entryRef.child("endTime").setValue(endTime);
+            entryRef.child("breakHours").setValue(breakHoursStr);
+            entryRef.child("id").setValue(id);
+        }
 
-        // Construir el ID único para la entrada en la base de datos
-        String id = currentDate + "_" + username.replace(".", "_"); // Reemplazar "." por "_" en el nombre de usuario
-
-        // Crear un objeto HorasTrabajo con los datos ingresados
-        HorasTrabajo horasTrabajo = new HorasTrabajo(id, startTime, endTime, breakHours);
-
-        // Guardar los datos en la base de datos
-        databaseReference.child(id).setValue(horasTrabajo);
-
-        Toast.makeText(getContext(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
-
-        dismiss(); // Cerrar el diálogo después de guardar los datos
+        Toast.makeText(getActivity(), "Horas registradas", Toast.LENGTH_SHORT).show();
+        dismiss();
     }
-
-
 }
+
+
