@@ -60,7 +60,8 @@ public class BajasVacacionesActivity extends AppCompatActivity {
         String fin = obtenerFecha(datePickerFin);
 
         if (motivo.isEmpty()) {
-            Toast.makeText(this, "Por favor, ingresa un motivo", Toast.LENGTH_SHORT).show();
+            editTextMotivo.setError("Por favor, ingresa un motivo");
+            editTextMotivo.requestFocus();
             return;
         }
 

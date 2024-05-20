@@ -31,23 +31,42 @@ public class SolicitudesAdapter extends RecyclerView.Adapter<SolicitudesAdapter.
         holder.bind(solicitud);
     }
 
+
     @Override
     public int getItemCount() {
         return solicitudesList.size();
     }
 
-    public static class SolicitudViewHolder extends RecyclerView.ViewHolder {
+    public class SolicitudViewHolder extends RecyclerView.ViewHolder {
+        public TextView textViewEmail;
+        public TextView textViewMotivo;
+        public TextView textViewEstado;
 
-        private TextView textViewSolicitud;
-
-        public SolicitudViewHolder(@NonNull View itemView) {
+        public SolicitudViewHolder(View itemView) {
             super(itemView);
-            textViewSolicitud = itemView.findViewById(R.id.textViewSolicitud);
+            textViewEmail = itemView.findViewById(R.id.textViewEmail);
+            textViewMotivo = itemView.findViewById(R.id.textViewMotivo);
+            textViewEstado = itemView.findViewById(R.id.textViewEstado);
         }
 
         public void bind(Solicitud solicitud) {
-            textViewSolicitud.setText("Motivo: " + solicitud.getMotivo() + "\nEstado: " + solicitud.getEstado());
+            textViewEmail.setText(solicitud.getUserId());
+
+            if (!solicitud.getMotivo().isEmpty()) {
+                textViewMotivo.setText("Motivo: " + solicitud.getMotivo());
+                textViewMotivo.setVisibility(View.VISIBLE);
+            } else {
+                textViewMotivo.setVisibility(View.GONE);
+            }
+
+            if (!solicitud.getEstado().isEmpty()) {
+                textViewEstado.setText("Estado: " + solicitud.getEstado());
+                textViewEstado.setVisibility(View.VISIBLE);
+            } else {
+                textViewEstado.setVisibility(View.GONE);
+            }
         }
     }
+
 }
 
