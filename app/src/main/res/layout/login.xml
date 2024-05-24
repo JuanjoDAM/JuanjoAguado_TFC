@@ -1,18 +1,20 @@
-<?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/resized_image_for_mobile"
     tools:context=".LoginActivity">
 
     <ImageView
         android:id="@+id/imageView"
-        android:layout_width="120dp"
-        android:layout_height="120dp"
-        android:layout_marginTop="32dp"
-        android:src="@drawable/ic_launcher_foreground"
+        android:layout_width="140dp"
+        android:layout_height="140dp"
+        android:layout_marginTop="140dp"
+        android:src="@drawable/icono"
+        android:background="@drawable/logo_circulo"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -26,9 +28,13 @@
         android:hint="Correo electrónico"
         android:inputType="textEmailAddress"
         android:minHeight="48dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/black"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/imageView" />
+        app:layout_constraintTop_toBottomOf="@id/imageView" />
 
     <EditText
         android:id="@+id/editTextPassword"
@@ -40,9 +46,13 @@
         android:hint="Contraseña"
         android:inputType="textPassword"
         android:minHeight="48dp"
+        android:backgroundTint="@android:color/white"
+        android:textColor="@android:color/black"
+        android:textColorHint="@android:color/black"
+        android:padding="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextEmail" />
+        app:layout_constraintTop_toBottomOf="@id/editTextEmail" />
 
     <Button
         android:id="@+id/buttonIniciarSesion"
@@ -52,9 +62,12 @@
         android:layout_marginTop="24dp"
         android:layout_marginEnd="32dp"
         android:text="Iniciar Sesión"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#FF96AABC"
+        android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextPassword" />
+        app:layout_constraintTop_toBottomOf="@id/editTextPassword" />
 
     <TextView
         android:id="@+id/textViewForgotPassword"
@@ -62,11 +75,11 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="16dp"
         android:text="¿Olvidaste tu contraseña?"
-        android:textColor="@color/colorAccent"
+        android:textColor="@android:color/black"
         android:textSize="16sp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/buttonIniciarSesion" />
+        app:layout_constraintTop_toBottomOf="@id/buttonIniciarSesion" />
 
     <Button
         android:id="@+id/buttonRegistrarse"
@@ -76,8 +89,11 @@
         android:layout_marginTop="16dp"
         android:layout_marginEnd="32dp"
         android:text="Registrarse"
+        android:textColor="@android:color/white"
+        android:backgroundTint="#FF96AABC"
+        android:elevation="8dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textViewForgotPassword" />
+        app:layout_constraintTop_toBottomOf="@id/textViewForgotPassword" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

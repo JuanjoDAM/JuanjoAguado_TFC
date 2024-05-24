@@ -1,6 +1,5 @@
 package com.juanjo.example.juanjoaguado_tfc;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -86,12 +85,6 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
-    private void registrarUsuario() {
-        // Aquí puedes agregar la lógica para manejar el registro de usuario
-        // Por ejemplo, abrir una nueva actividad para el registro de usuario
-    }
-
-    // Dentro del método iniciarSesion en LoginActivity.java
 
     private void iniciarSesion() {
         String email = editTextEmail.getText().toString().trim();

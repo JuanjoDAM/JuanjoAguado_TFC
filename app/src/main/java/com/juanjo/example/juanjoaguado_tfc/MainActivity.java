@@ -2,31 +2,28 @@ package com.juanjo.example.juanjoaguado_tfc;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
-import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.github.mikephil.charting.charts.BarChart;
-import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
-import com.github.mikephil.charting.utils.ColorTemplate;
+import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 
+import org.checkerframework.checker.nullness.qual.NonNull;
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
@@ -34,10 +31,10 @@ import java.util.Map;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button buttonRegistrarHoras;
-    private Button buttonBajasVacaciones;
-    private Button buttonNominas;
+    private Button buttonRegistrarHoras, buttonBajasVacaciones, buttonNominas, buttonDatosPersonales;
     private BarChart barChart;
+    private DatabaseReference databaseReference;
+    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,30 +44,18 @@ public class MainActivity extends AppCompatActivity {
         buttonRegistrarHoras = findViewById(R.id.buttonRegistrarHoras);
         buttonBajasVacaciones = findViewById(R.id.buttonBajasVacaciones);
         buttonNominas = findViewById(R.id.buttonNominas);
+        buttonDatosPersonales = findViewById(R.id.buttonDatosPersonales);
         barChart = findViewById(R.id.barChart);
 
-        buttonRegistrarHoras.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                mostrarDialogoRegistroHoras();
-            }
-        });
+        mAuth = FirebaseAuth.getInstance();
+        databaseReference = FirebaseDatabase.getInstance().getReference("horas_trabajo");
 
-        buttonBajasVacaciones.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirActividadBajasVacaciones();
-            }
-        });
+        buttonRegistrarHoras.setOnClickListener(v -> mostrarDialogoRegistroHoras());
+        buttonBajasVacaciones.setOnClickListener(v -> abrirActividadBajasVacaciones());
+        buttonNominas.setOnClickListener(v -> abrirActividadNominas());
+        buttonDatosPersonales.setOnClickListener(v -> mostrarDialogoDatosPersonales());
 
-        buttonNominas.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                abrirActividadNominas();
-            }
-        });
-
-        cargarDatosHorasTrabajadas();
+        cargarHorasTrabajadas();
     }
 
     private void mostrarDialogoRegistroHoras() {
@@ -88,78 +73,82 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
-    private void cargarDatosHorasTrabajadas() {
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        if (currentUser != null) {
-            String email = currentUser.getEmail().replace(".", "_");
-            String currentMonth = new SimpleDateFormat("MM-yyyy", Locale.getDefault()).format(new Date());
+    private void mostrarDialogoDatosPersonales() {
+        DialogFragment dialogFragment = new DatosPersonalesDialog();
+        dialogFragment.show(getSupportFragmentManager(), "DatosPersonalesDialog");
+    }
 
-            FirebaseDatabase.getInstance().getReference("horas_trabajo")
-                    .orderByKey()
+    private void cargarHorasTrabajadas() {
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            String userId = currentUser.getUid();
+            String userEmail = currentUser.getEmail().replace(".", "_");
+            databaseReference.orderByKey().startAt("01-05-2024_" + userEmail).endAt("31-05-2024_" + userEmail)
                     .addValueEventListener(new ValueEventListener() {
                         @Override
-                        public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                            Map<String, Integer> horasPorDia = new HashMap<>();
-                            for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                                String key = snapshot.getKey();
-                                if (key != null && key.contains(email) && key.contains(currentMonth)) {
-                                    String startTime = snapshot.child("startTime").getValue(String.class);
-                                    String endTime = snapshot.child("endTime").getValue(String.class);
-                                    String breakHours = snapshot.child("breakHours").getValue(String.class);
-                                    int horasTrabajadas = calcularHorasTrabajadas(startTime, endTime, breakHours);
-
-                                    String dia = key.substring(0, 2);
-                                    horasPorDia.put(dia, horasPorDia.getOrDefault(dia, 0) + horasTrabajadas);
+                        public void onDataChange(@NonNull DataSnapshot snapshot) {
+                            Map<String, Float> horasTrabajadasPorDia = new HashMap<>();
+                            for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
+                                HorasTrabajo horasTrabajo = dataSnapshot.getValue(HorasTrabajo.class);
+                                if (horasTrabajo != null) {
+                                    String fecha = horasTrabajo.getId().split("_")[0];
+                                    float horasTrabajadas = calcularHorasTrabajadas(horasTrabajo.getStartTime(), horasTrabajo.getEndTime(), horasTrabajo.getBreakHours());
+                                    if (horasTrabajadasPorDia.containsKey(fecha)) {
+                                        horasTrabajadasPorDia.put(fecha, horasTrabajadasPorDia.get(fecha) + horasTrabajadas);
+                                    } else {
+                                        horasTrabajadasPorDia.put(fecha, horasTrabajadas);
+                                    }
                                 }
                             }
-
-                            List<BarEntry> entries = new ArrayList<>();
-                            for (Map.Entry<String, Integer> entry : horasPorDia.entrySet()) {
-                                entries.add(new BarEntry(Float.parseFloat(entry.getKey()), entry.getValue()));
-                            }
-
-                            BarDataSet dataSet = new BarDataSet(entries, "Horas trabajadas");
-                            dataSet.setColors(ColorTemplate.MATERIAL_COLORS);
-                            BarData barData = new BarData(dataSet);
-                            barChart.setData(barData);
-                            barChart.invalidate();
-
-                            Description description = new Description();
-                            description.setText("Horas trabajadas por día");
-                            barChart.setDescription(description);
+                            mostrarGrafico(horasTrabajadasPorDia);
                         }
 
                         @Override
-                        public void onCancelled(@NonNull DatabaseError databaseError) {
-                            Toast.makeText(MainActivity.this, "Error al cargar los datos", Toast.LENGTH_SHORT).show();
+                        public void onCancelled(@NonNull DatabaseError error) {
+                            // Handle error
                         }
                     });
         }
     }
 
-    private int calcularHorasTrabajadas(String startTime, String endTime, String breakHours) {
+    private float calcularHorasTrabajadas(String startTime, String endTime, String breakHours) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm", Locale.getDefault());
         try {
-            SimpleDateFormat format = new SimpleDateFormat("HH:mm", Locale.getDefault());
-            long startMillis = format.parse(startTime).getTime();
-            long endMillis = format.parse(endTime).getTime();
-            long breakMillis = (long) (Double.parseDouble(breakHours) * 3600000);
-
+            long startMillis = sdf.parse(startTime).getTime();
+            long endMillis = sdf.parse(endTime).getTime();
+            float breakTime = Float.parseFloat(breakHours);
             if (endMillis < startMillis) {
-                // Handle cases where endTime is past midnight
-                Calendar calendar = Calendar.getInstance();
-                calendar.setTimeInMillis(endMillis);
-                calendar.add(Calendar.DAY_OF_MONTH, 1);
-                endMillis = calendar.getTimeInMillis();
+                endMillis += 24 * 60 * 60 * 1000;
             }
-
-            return (int) ((endMillis - startMillis - breakMillis) / 3600000);
+            return ((endMillis - startMillis) / (1000 * 60 * 60)) - breakTime;
         } catch (Exception e) {
             e.printStackTrace();
             return 0;
         }
     }
+
+    private void mostrarGrafico(Map<String, Float> horasTrabajadasPorDia) {
+        List<BarEntry> entries = new ArrayList<>();
+        List<String> labels = new ArrayList<>();
+        int index = 0;
+        for (Map.Entry<String, Float> entry : horasTrabajadasPorDia.entrySet()) {
+            entries.add(new BarEntry(index, entry.getValue()));
+            labels.add(entry.getKey().substring(0, 5)); // Formato día/mes
+            index++;
+        }
+
+        BarDataSet dataSet = new BarDataSet(entries, "Horas trabajadas");
+        dataSet.setColor(getResources().getColor(R.color.colorPrimary));
+        BarData barData = new BarData(dataSet);
+        barChart.setData(barData);
+        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
+        barChart.getXAxis().setTextSize(12f);
+        barChart.getXAxis().setLabelCount(labels.size());
+        barChart.getAxisLeft().setAxisMinimum(0);
+        barChart.getAxisLeft().setAxisMaximum(10);
+        barChart.getAxisLeft().setLabelCount(11, true);
+        barChart.getDescription().setEnabled(false);
+        barChart.invalidate(); // Refresh chart
+    }
 }
-
-
-
 

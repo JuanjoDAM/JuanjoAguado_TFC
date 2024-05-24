@@ -1,16 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    tools:context=".MainActivity">
+
+    <ImageView
+        android:id="@+id/imageViewProfile"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:layout_marginTop="16dp"
+        android:src="@drawable/ic_accepted"
+        android:background="@drawable/borde_negro"
+        android:scaleType="centerCrop"
+        android:elevation="4dp"/>
 
     <Button
         android:id="@+id/buttonRegistrarHoras"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registrar Horas"
+        android:layout_below="@id/imageViewProfile"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:elevation="4dp"/>
 
     <Button
         android:id="@+id/buttonBajasVacaciones"
@@ -18,8 +38,12 @@
         android:layout_height="wrap_content"
         android:text="Bajas y Vacaciones"
         android:layout_below="@id/buttonRegistrarHoras"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:elevation="4dp"/>
 
     <Button
         android:id="@+id/buttonNominas"
@@ -27,16 +51,41 @@
         android:layout_height="wrap_content"
         android:text="Nóminas"
         android:layout_below="@id/buttonBajasVacaciones"
+        android:layout_centerHorizontal="true"
         android:layout_marginTop="16dp"
-        android:layout_centerHorizontal="true"/>
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:elevation="4dp"/>
+
+    <Button
+        android:id="@+id/buttonDatosPersonales"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Datos Personales"
+        android:layout_below="@id/buttonNominas"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@color/colorPrimary"
+        android:textColor="@android:color/white"
+        android:padding="12dp"
+        android:elevation="4dp"/>
 
     <com.github.mikephil.charting.charts.BarChart
         android:id="@+id/barChart"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_below="@id/buttonNominas"
-        android:layout_marginTop="16dp"/>
+        android:layout_height="0dp"
+        android:layout_below="@id/buttonDatosPersonales"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="16dp"
+        android:layout_weight="1"/>
 </RelativeLayout>
+
+
+
+
+
+
 
 
 
