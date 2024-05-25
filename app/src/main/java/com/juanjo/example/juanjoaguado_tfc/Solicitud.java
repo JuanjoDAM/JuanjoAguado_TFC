@@ -3,8 +3,6 @@ package com.juanjo.example.juanjoaguado_tfc;
 
 import java.io.Serializable;
 
-import java.io.Serializable;
-
 public class Solicitud implements Serializable {
     private String id;
     private String userId;
