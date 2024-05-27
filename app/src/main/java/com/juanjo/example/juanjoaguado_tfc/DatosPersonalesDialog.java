@@ -1,6 +1,7 @@
 package com.juanjo.example.juanjoaguado_tfc;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.LayoutInflater;
@@ -80,20 +81,36 @@ public class DatosPersonalesDialog extends DialogFragment {
         String correo = editTextCorreo.getText().toString().trim();
 
         if (TextUtils.isEmpty(dni) || TextUtils.isEmpty(nombre) || TextUtils.isEmpty(apellidos) || TextUtils.isEmpty(correo)) {
-            Toast.makeText(getContext(), "Por favor completa todos los campos", Toast.LENGTH_SHORT).show();
+            showToast("Por favor completa todos los campos");
             return;
         }
 
-        String userId = currentUser.getUid();
-        DatosPersonales datosPersonales = new DatosPersonales(dni, nombre, apellidos, correo);
+        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        String email = currentUser != null ? currentUser.getEmail() : "";
 
-        databaseReference.child(userId).setValue(datosPersonales)
-                .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(getContext(), "Datos guardados correctamente", Toast.LENGTH_SHORT).show();
-                    dismiss();
-                })
-                .addOnFailureListener(e -> Toast.makeText(getContext(), "Error al guardar los datos", Toast.LENGTH_SHORT).show());
+        if (email != null) {
+            String emailKey = email.replace(".", "_");
+
+            DatosPersonales datosPersonales = new DatosPersonales(dni, nombre, apellidos, correo);
+
+            databaseReference.child(emailKey).setValue(datosPersonales)
+                    .addOnSuccessListener(aVoid -> {
+                        showToast("Datos guardados correctamente");
+                        dismiss();
+                    })
+                    .addOnFailureListener(e -> showToast("Error al guardar los datos"));
+        } else {
+            showToast("No se pudo obtener el correo electrónico del usuario");
+        }
     }
-}
+
+    private void showToast(String message) {
+        Context context = getContext();
+        if (context != null) {
+            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+        }
+    }
+    }
+
 
 

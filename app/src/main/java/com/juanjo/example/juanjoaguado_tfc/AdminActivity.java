@@ -7,16 +7,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
-import com.google.firebase.storage.UploadTask;
 
 public class AdminActivity extends AppCompatActivity {
 
@@ -25,16 +20,21 @@ public class AdminActivity extends AppCompatActivity {
 
     private Button buttonSeleccionarEmpleado;
     private Button buttonVerSolicitudes;
+    private Button buttonVerUsuarios; // Nuevo botón para ver usuarios
+
     private FirebaseStorage storage;
     private String selectedEmployeeEmail;
     private Uri pdfUri;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        super.onCreate(savedInstanceState); // Corregido el error tipográfico aquí
         setContentView(R.layout.activity_admin);
 
         buttonSeleccionarEmpleado = findViewById(R.id.buttonSeleccionarEmpleado);
+        buttonVerSolicitudes = findViewById(R.id.buttonVerSolicitudes);
+        buttonVerUsuarios = findViewById(R.id.buttonVerUsuarios); // Inicializar el botón
+
         storage = FirebaseStorage.getInstance();
 
         buttonSeleccionarEmpleado.setOnClickListener(new View.OnClickListener() {
@@ -44,18 +44,23 @@ public class AdminActivity extends AppCompatActivity {
             }
         });
 
-        buttonVerSolicitudes = findViewById(R.id.buttonVerSolicitudes);
         buttonVerSolicitudes.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Navegar a AdminSolicitudesActivity para ver las solicitudes de baja/vacaciones
                 Intent intent = new Intent(AdminActivity.this, AdminSolicitudesActivity.class);
                 startActivity(intent);
             }
         });
+
+        buttonVerUsuarios.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // Navegar a VerUsuariosActivity para ver la lista de usuarios
+                Intent intent = new Intent(AdminActivity.this, VerUsuariosActivity.class);
+                startActivity(intent);
+            }
+        });
     }
-
-
 
     private void seleccionarEmpleado() {
         Intent intent = new Intent(this, SeleccionarEmpleadoActivity.class);
@@ -85,21 +90,10 @@ public class AdminActivity extends AppCompatActivity {
             String email = selectedEmployeeEmail.replace(".", "_");
             StorageReference storageReference = storage.getReference().child("nominas/" + email + "/" + pdfUri.getLastPathSegment());
             storageReference.putFile(pdfUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            Toast.makeText(AdminActivity.this, "Nómina subida exitosamente", Toast.LENGTH_SHORT).show();
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(AdminActivity.this, "Error al subir la nómina: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-                        }
-                    });
+                    .addOnSuccessListener(taskSnapshot -> Toast.makeText(AdminActivity.this, "Nómina subida exitosamente", Toast.LENGTH_SHORT).show())
+                    .addOnFailureListener(e -> Toast.makeText(AdminActivity.this, "Error al subir la nómina: " + e.getMessage(), Toast.LENGTH_SHORT).show());
         }
     }
 }
-
 
 

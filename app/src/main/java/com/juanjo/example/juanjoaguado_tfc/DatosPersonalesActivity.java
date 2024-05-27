@@ -1,25 +1,22 @@
 package com.juanjo.example.juanjoaguado_tfc;
 
-
 import android.os.Bundle;
-import android.text.TextUtils;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class DatosPersonalesActivity extends AppCompatActivity {
 
     private EditText editTextDNI, editTextNombre, editTextApellidos, editTextEmail;
-    private Button buttonGuardar;
     private DatabaseReference databaseReference;
-    private FirebaseAuth mAuth;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,37 +27,55 @@ public class DatosPersonalesActivity extends AppCompatActivity {
         editTextNombre = findViewById(R.id.editTextNombre);
         editTextApellidos = findViewById(R.id.editTextApellidos);
         editTextEmail = findViewById(R.id.editTextEmail);
-        buttonGuardar = findViewById(R.id.buttonGuardar);
 
-        mAuth = FirebaseAuth.getInstance();
-        databaseReference = FirebaseDatabase.getInstance().getReference("datos_personales");
+        databaseReference = FirebaseDatabase.getInstance().getReference().child("datos_personales");
 
-        buttonGuardar.setOnClickListener(v -> guardarDatosPersonales());
+        String email = getIntent().getStringExtra("email");
+
+        if (email != null) {
+            cargarDatosPersonales(email);
+        } else {
+            Toast.makeText(this, "No se recibió el correo electrónico", Toast.LENGTH_SHORT).show();
+        }
+
+        if (getIntent().getBooleanExtra("isAdmin", false)) {
+            deshabilitarCampos();
+        }
     }
 
-    private void guardarDatosPersonales() {
-        String dni = editTextDNI.getText().toString().trim();
-        String nombre = editTextNombre.getText().toString().trim();
-        String apellidos = editTextApellidos.getText().toString().trim();
-        String email = editTextEmail.getText().toString().trim();
+    private void cargarDatosPersonales(String email) {
+        String emailKey = email.replace(".", "_");
 
-        if (TextUtils.isEmpty(dni) || TextUtils.isEmpty(nombre) || TextUtils.isEmpty(apellidos) || TextUtils.isEmpty(email)) {
-            Toast.makeText(this, "Por favor, completa todos los campos", Toast.LENGTH_SHORT).show();
-            return;
-        }
+        databaseReference.child(emailKey).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                DatosPersonales datos = dataSnapshot.getValue(DatosPersonales.class);
+                if (datos != null) {
+                    editTextDNI.setText(datos.getDni());
+                    editTextNombre.setText(datos.getNombre());
+                    editTextApellidos.setText(datos.getApellidos());
+                    editTextEmail.setText(datos.getCorreo());
+                } else {
+                    Toast.makeText(DatosPersonalesActivity.this, "No se encontraron datos personales", Toast.LENGTH_SHORT).show();
+                }
+            }
 
-        FirebaseUser currentUser = mAuth.getCurrentUser();
-        if (currentUser == null) {
-            Toast.makeText(this, "Error de autenticación. Por favor, inicia sesión de nuevo.", Toast.LENGTH_SHORT).show();
-            return;
-        }
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Toast.makeText(DatosPersonalesActivity.this, "Error al cargar los datos personales", Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
 
-        String userId = currentUser.getUid();
-        DatosPersonales datosPersonales = new DatosPersonales(dni, nombre, apellidos, email);
-
-        databaseReference.child(userId).setValue(datosPersonales)
-                .addOnSuccessListener(aVoid -> Toast.makeText(DatosPersonalesActivity.this, "Datos guardados correctamente", Toast.LENGTH_SHORT).show())
-                .addOnFailureListener(e -> Toast.makeText(DatosPersonalesActivity.this, "Error al guardar los datos", Toast.LENGTH_SHORT).show());
+    private void deshabilitarCampos() {
+        editTextDNI.setEnabled(false);
+        editTextNombre.setEnabled(false);
+        editTextApellidos.setEnabled(false);
+        editTextEmail.setEnabled(false);
     }
 }
+
+
+
+
 
