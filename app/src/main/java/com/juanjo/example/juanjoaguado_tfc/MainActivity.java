@@ -74,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mostrarDialogoDatosPersonales() {
-        DialogFragment dialogFragment = new DatosPersonalesDialog();
+        DialogFragment dialogFragment = new DatosPersonalesDialog(false);
         dialogFragment.show(getSupportFragmentManager(), "DatosPersonalesDialog");
     }
 

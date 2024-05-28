@@ -1,12 +1,10 @@
 package com.juanjo.example.juanjoaguado_tfc;
 
-
-import android.content.Context;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -26,35 +24,58 @@ import com.google.firebase.database.ValueEventListener;
 public class DatosPersonalesDialog extends DialogFragment {
 
     private EditText editTextDNI, editTextNombre, editTextApellidos, editTextCorreo;
-    private Button buttonGuardarDatos;
+    private Button buttonEliminar, buttonCancelar;
     private DatabaseReference databaseReference;
     private FirebaseUser currentUser;
+    private boolean isAdmin;
 
-    @Nullable
+    public DatosPersonalesDialog(boolean isAdmin) {
+        this.isAdmin = isAdmin;
+    }
+
+    @NonNull
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.dialog_datos_personales, container, false);
+    public Dialog onCreateDialog(@Nullable Bundle savedInstanceState) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("");
 
-        editTextDNI = view.findViewById(R.id.editTextDNI);
-        editTextNombre = view.findViewById(R.id.editTextNombre);
-        editTextApellidos = view.findViewById(R.id.editTextApellidos);
-        editTextCorreo = view.findViewById(R.id.editTextCorreo);
-        buttonGuardarDatos = view.findViewById(R.id.buttonGuardarDatos);
+        // Inflar el layout
+        builder.setView(R.layout.dialog_datos_personales);
 
-        databaseReference = FirebaseDatabase.getInstance().getReference("datos_personales");
-        currentUser = FirebaseAuth.getInstance().getCurrentUser();
+        return builder.create();
+    }
 
-        cargarDatosPersonales();
+    @Override
+    public void onStart() {
+        super.onStart();
+        AlertDialog dialog = (AlertDialog) getDialog();
 
-        buttonGuardarDatos.setOnClickListener(v -> guardarDatos());
+        if (dialog != null) {
+            editTextDNI = dialog.findViewById(R.id.editTextDNI);
+            editTextNombre = dialog.findViewById(R.id.editTextNombre);
+            editTextApellidos = dialog.findViewById(R.id.editTextApellidos);
+            editTextCorreo = dialog.findViewById(R.id.editTextCorreo);
+            buttonEliminar = dialog.findViewById(R.id.buttonEliminar);
+            buttonCancelar = dialog.findViewById(R.id.buttonCancelar);
 
-        return view;
+            databaseReference = FirebaseDatabase.getInstance().getReference("datos_personales");
+            currentUser = FirebaseAuth.getInstance().getCurrentUser();
+
+            buttonCancelar.setOnClickListener(v -> dismiss());
+
+            if (isAdmin) {
+                buttonEliminar.setVisibility(View.VISIBLE);
+                buttonEliminar.setOnClickListener(v -> confirmarEliminarUsuario());
+            }
+
+            cargarDatosPersonales();
+        }
     }
 
     private void cargarDatosPersonales() {
-        if (currentUser != null) {
-            String userId = currentUser.getUid();
-            databaseReference.child(userId).addListenerForSingleValueEvent(new ValueEventListener() {
+        String email = getArguments().getString("email").replace(".", "_");
+        if (email != null) {
+            databaseReference.child(email).addListenerForSingleValueEvent(new ValueEventListener() {
                 @Override
                 public void onDataChange(@NonNull DataSnapshot snapshot) {
                     DatosPersonales datosPersonales = snapshot.getValue(DatosPersonales.class);
@@ -63,54 +84,42 @@ public class DatosPersonalesDialog extends DialogFragment {
                         editTextNombre.setText(datosPersonales.getNombre());
                         editTextApellidos.setText(datosPersonales.getApellidos());
                         editTextCorreo.setText(datosPersonales.getCorreo());
+
+                        if (isAdmin) {
+                            editTextDNI.setEnabled(false);
+                            editTextNombre.setEnabled(false);
+                            editTextApellidos.setEnabled(false);
+                            editTextCorreo.setEnabled(false);
+                        }
                     }
                 }
 
                 @Override
                 public void onCancelled(@NonNull DatabaseError error) {
-                    Toast.makeText(getContext(), "Error al cargar los datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Error al cargar los datos", Toast.LENGTH_SHORT).show();
                 }
             });
         }
     }
 
-    private void guardarDatos() {
-        String dni = editTextDNI.getText().toString().trim();
-        String nombre = editTextNombre.getText().toString().trim();
-        String apellidos = editTextApellidos.getText().toString().trim();
-        String correo = editTextCorreo.getText().toString().trim();
+    private void confirmarEliminarUsuario() {
+        new AlertDialog.Builder(getActivity())
+                .setTitle("Confirmar eliminación")
+                .setMessage("¿Quieres eliminar a " + editTextNombre.getText().toString() + " de forma permanente?")
+                .setPositiveButton("Sí", (dialog, which) -> eliminarUsuario())
+                .setNegativeButton("No", null)
+                .show();
+    }
 
-        if (TextUtils.isEmpty(dni) || TextUtils.isEmpty(nombre) || TextUtils.isEmpty(apellidos) || TextUtils.isEmpty(correo)) {
-            showToast("Por favor completa todos los campos");
-            return;
-        }
-
-        FirebaseUser currentUser = FirebaseAuth.getInstance().getCurrentUser();
-        String email = currentUser != null ? currentUser.getEmail() : "";
-
+    private void eliminarUsuario() {
+        String email = getArguments().getString("email").replace(".", "_");
         if (email != null) {
-            String emailKey = email.replace(".", "_");
-
-            DatosPersonales datosPersonales = new DatosPersonales(dni, nombre, apellidos, correo);
-
-            databaseReference.child(emailKey).setValue(datosPersonales)
+            databaseReference.child(email).removeValue()
                     .addOnSuccessListener(aVoid -> {
-                        showToast("Datos guardados correctamente");
+                        Toast.makeText(getActivity(), "Usuario eliminado correctamente", Toast.LENGTH_SHORT).show();
                         dismiss();
                     })
-                    .addOnFailureListener(e -> showToast("Error al guardar los datos"));
-        } else {
-            showToast("No se pudo obtener el correo electrónico del usuario");
+                    .addOnFailureListener(e -> Toast.makeText(getActivity(), "Error al eliminar el usuario", Toast.LENGTH_SHORT).show());
         }
     }
-
-    private void showToast(String message) {
-        Context context = getContext();
-        if (context != null) {
-            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-        }
-    }
-    }
-
-
-
+}

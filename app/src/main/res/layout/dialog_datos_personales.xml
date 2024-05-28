@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:padding="16dp"
-    android:background="@drawable/fondo_dialog">
+    android:layout_height="match_parent"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/textViewTitulo"
@@ -12,53 +11,61 @@
         android:text="Datos Personales"
         android:textSize="24sp"
         android:textStyle="bold"
-        android:textColor="@color/colorPrimary"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"/>
 
     <EditText
         android:id="@+id/editTextDNI"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="DNI/NIF"
-        android:inputType="text"
         android:layout_below="@id/textViewTitulo"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginBottom="8dp"
+        android:enabled="false"/>
 
     <EditText
         android:id="@+id/editTextNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nombre"
-        android:inputType="text"
         android:layout_below="@id/editTextDNI"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginBottom="8dp"
+        android:enabled="false"/>
 
     <EditText
         android:id="@+id/editTextApellidos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Apellidos"
-        android:inputType="text"
         android:layout_below="@id/editTextNombre"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginBottom="8dp"
+        android:enabled="false"/>
 
     <EditText
         android:id="@+id/editTextCorreo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Correo Electrónico"
-        android:inputType="textEmailAddress"
         android:layout_below="@id/editTextApellidos"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginBottom="16dp"
+        android:enabled="false"/>
 
     <Button
-        android:id="@+id/buttonGuardarDatos"
-        android:layout_width="wrap_content"
+        android:id="@+id/buttonEliminar"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Guardar"
+        android:text="Eliminar Usuario"
         android:layout_below="@id/editTextCorreo"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="24dp"
-        android:textColor="@android:color/white"/>
+        android:layout_marginTop="16dp"
+        android:visibility="gone"/>
+
+    <Button
+        android:id="@+id/buttonCancelar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Cancelar"
+        android:layout_below="@id/buttonEliminar"
+        android:layout_marginTop="8dp"/>
+
 </RelativeLayout>
 
