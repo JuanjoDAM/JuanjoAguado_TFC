@@ -1,8 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/background_gra"
+    tools:context=".DatosPersonalesActivity">
 
     <TextView
         android:id="@+id/textViewTitulo"
@@ -11,60 +14,83 @@
         android:text="Datos Personales"
         android:textSize="24sp"
         android:textStyle="bold"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"/>
+        android:layout_marginBottom="24dp"/>
 
     <EditText
         android:id="@+id/editTextDNI"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="DNI/NIF"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_below="@id/textViewTitulo"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="12dp"/>
 
     <EditText
         android:id="@+id/editTextNombre"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Nombre"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_below="@id/editTextDNI"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="12dp"/>
 
     <EditText
         android:id="@+id/editTextApellidos"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Apellidos"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_below="@id/editTextNombre"
-        android:layout_marginBottom="8dp"/>
+        android:layout_marginBottom="12dp"/>
 
     <EditText
         android:id="@+id/editTextCorreo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="Correo Electrónico"
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_below="@id/editTextApellidos"
-        android:layout_marginBottom="16dp" />
+        android:layout_marginBottom="24dp"/>
 
     <Button
         android:id="@+id/buttonEliminar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Eliminar Usuario"
+        android:background="@drawable/button_background_red"
+        android:textColor="@android:color/white"
         android:layout_below="@id/editTextCorreo"
         android:layout_marginTop="16dp"
-        android:visibility="gone"/>
+        android:visibility="gone"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:elevation="4dp"/>
 
     <Button
         android:id="@+id/buttonGuardar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Guardar"
+        android:background="@drawable/button_background"
+        android:textColor="@android:color/white"
         android:layout_below="@id/buttonEliminar"
-        android:layout_marginTop="8dp"/>
-
+        android:layout_marginTop="16dp"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:elevation="4dp"/>
 
 </RelativeLayout>
+
 
 
 

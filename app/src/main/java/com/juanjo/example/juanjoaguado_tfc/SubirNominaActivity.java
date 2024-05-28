@@ -1,10 +1,14 @@
 package com.juanjo.example.juanjoaguado_tfc;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.pdf.PdfRenderer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.ParcelFileDescriptor;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -19,6 +23,10 @@ import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -26,6 +34,7 @@ public class SubirNominaActivity extends AppCompatActivity {
 
     private static final int PICK_PDF_REQUEST = 1;
     private Button buttonSelectPDF, buttonUploadPDF;
+    private ImageView imageViewPDF;
     private Uri pdfUri;
     private String userEmail;
 
@@ -39,6 +48,7 @@ public class SubirNominaActivity extends AppCompatActivity {
 
         buttonSelectPDF = findViewById(R.id.buttonSelectPDF);
         buttonUploadPDF = findViewById(R.id.buttonUploadPDF);
+        imageViewPDF = findViewById(R.id.imageViewPDF);
 
         storageReference = FirebaseStorage.getInstance().getReference("nominas");
         databaseReference = FirebaseDatabase.getInstance().getReference("nominas");
@@ -72,6 +82,38 @@ public class SubirNominaActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == PICK_PDF_REQUEST && resultCode == RESULT_OK && data != null && data.getData() != null) {
             pdfUri = data.getData();
+            displayPDF(pdfUri);
+        }
+    }
+
+    private void displayPDF(Uri uri) {
+        try {
+            File file = new File(getCacheDir(), "temp.pdf");
+            try (InputStream inputStream = getContentResolver().openInputStream(uri);
+                 FileOutputStream outputStream = new FileOutputStream(file)) {
+                byte[] buffer = new byte[1024];
+                int length;
+                while ((length = inputStream.read(buffer)) > 0) {
+                    outputStream.write(buffer, 0, length);
+                }
+            }
+
+            ParcelFileDescriptor parcelFileDescriptor = ParcelFileDescriptor.open(file, ParcelFileDescriptor.MODE_READ_ONLY);
+            PdfRenderer pdfRenderer = new PdfRenderer(parcelFileDescriptor);
+            PdfRenderer.Page page = pdfRenderer.openPage(0);
+
+            Bitmap bitmap = Bitmap.createBitmap(page.getWidth(), page.getHeight(), Bitmap.Config.ARGB_8888);
+            page.render(bitmap, null, null, PdfRenderer.Page.RENDER_MODE_FOR_DISPLAY);
+
+            imageViewPDF.setImageBitmap(bitmap);
+            imageViewPDF.setVisibility(View.VISIBLE);
+
+            page.close();
+            pdfRenderer.close();
+            parcelFileDescriptor.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+            Toast.makeText(this, "Error al mostrar el PDF", Toast.LENGTH_SHORT).show();
         }
     }
 

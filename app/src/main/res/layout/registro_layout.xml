@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- registro_layout.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/background_gra"
+    tools:context=".RegistroActivity">
 
     <TextView
         android:layout_width="wrap_content"
@@ -12,7 +15,9 @@
         android:text="Registro"
         android:textSize="24sp"
         android:textColor="@color/colorPrimaryDark"
-        android:layout_marginBottom="24dp"/>
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="24dp"
+        android:textStyle="bold"/>
 
     <EditText
         android:id="@+id/editTextCorreo"
@@ -21,7 +26,11 @@
         android:layout_marginTop="16dp"
         android:hint="Correo electrónico"
         android:inputType="textEmailAddress"
-        android:minHeight="48dp" />
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:minHeight="48dp"
+        android:elevation="4dp"/>
 
     <EditText
         android:id="@+id/editTextContraseña"
@@ -30,7 +39,11 @@
         android:layout_marginTop="16dp"
         android:hint="Contraseña"
         android:inputType="textPassword"
-        android:minHeight="48dp" />
+        android:background="@drawable/edit_text_background"
+        android:padding="12dp"
+        android:textColor="@color/colorPrimaryDark"
+        android:minHeight="48dp"
+        android:elevation="4dp"/>
 
     <Button
         android:id="@+id/buttonRegistrarse"
@@ -38,7 +51,11 @@
         android:layout_height="wrap_content"
         android:text="Registrarse"
         android:textColor="@android:color/white"
-        android:background="@color/colorPrimary"
-        android:layout_marginTop="24dp"/>
+        android:background="@drawable/button_background"
+        android:layout_marginTop="24dp"
+        android:textSize="18sp"
+        android:padding="12dp"
+        android:elevation="4dp"/>
 </LinearLayout>
+
 
