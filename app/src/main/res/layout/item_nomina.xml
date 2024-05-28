@@ -4,14 +4,19 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/background_card">
 
     <TextView
         android:id="@+id/textViewNomina"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="18sp" />
-
+        android:text="Detalles de la Nómina"
+        android:textSize="18sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="8dp"
+        android:layout_gravity="center"
+        android:textStyle="bold"/>
 </LinearLayout>
 
 

@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_general"
     android:orientation="vertical"
     tools:context=".NominasActivity">
 
@@ -11,7 +12,10 @@
         android:id="@+id/recyclerViewNominas"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_margin="16dp" />
+        android:layout_margin="16dp"
+        android:scrollbars="vertical"
+        android:fadingEdgeLength="50dp"
+        android:overScrollMode="always" />
 
 </LinearLayout>
 

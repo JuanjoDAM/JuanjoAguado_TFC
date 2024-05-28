@@ -2,6 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_general"
     android:orientation="vertical"
     android:padding="16dp">
 
@@ -9,56 +10,56 @@
         android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Email"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewMotivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Motivo"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewTipo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Tipo"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewInicio"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Fecha de Inicio"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewFin"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Fecha de Fin"
-        android:textSize="18sp"
-        android:layout_marginBottom="8dp" />
+        android:textSize="18sp" />
 
     <TextView
         android:id="@+id/textViewEstado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
         android:text="Estado"
-        android:textSize="18sp"
-        android:layout_marginBottom="16dp" />
+        android:textSize="18sp" />
 
     <Button
         android:id="@+id/buttonAceptar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Aceptar"
-        android:layout_marginBottom="8dp" />
+        android:layout_marginBottom="8dp"
+        android:text="Aceptar" />
 
     <Button
         android:id="@+id/buttonRechazar"

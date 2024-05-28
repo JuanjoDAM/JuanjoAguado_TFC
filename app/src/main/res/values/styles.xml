@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <resources>
+        <!-- Estilo personalizado para DatePicker -->
+        <style name="CustomDatePickerTheme" parent="Theme.AppCompat.Light.Dialog">
+            <item name="colorAccent">@color/colorPrimary</item>
+            <item name="android:datePickerStyle">@style/MyDatePicker</item>
+        </style>
+
+        <style name="MyDatePicker" parent="android:Widget.Material.DatePicker">
+            <item name="android:headerBackground">@color/colorPrimary</item>
+            <item name="android:calendarTextColor">@color/colorPrimaryDark</item>
+            <item name="android:calendarViewShown">true</item>
+            <item name="android:datePickerMode">spinner</item>
+        </style>
+    </resources>
+

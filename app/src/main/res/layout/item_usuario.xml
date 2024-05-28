@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!-- item_usuario.xml -->
-<!-- item_usuario.xml -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/background_card"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
 
     <TextView
         android:id="@+id/textViewEmail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:textSize="16sp" />
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="8dp"
+        android:background="@drawable/textview_background"
+        android:text="Email"
+        android:textStyle="bold"
+        android:gravity="center" />
 </LinearLayout>
+

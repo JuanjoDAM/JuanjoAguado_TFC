@@ -8,6 +8,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.DialogFragment;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.XAxis;
+import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
@@ -140,15 +142,30 @@ public class MainActivity extends AppCompatActivity {
         dataSet.setColor(getResources().getColor(R.color.colorPrimary));
         BarData barData = new BarData(dataSet);
         barChart.setData(barData);
-        barChart.getXAxis().setValueFormatter(new IndexAxisValueFormatter(labels));
-        barChart.getXAxis().setTextSize(12f);
-        barChart.getXAxis().setLabelCount(labels.size());
-        barChart.getAxisLeft().setAxisMinimum(0);
-        barChart.getAxisLeft().setAxisMaximum(10);
-        barChart.getAxisLeft().setLabelCount(11, true);
-        barChart.getDescription().setEnabled(false);
-        barChart.invalidate(); // Refresh chart
+
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(labels));
+        xAxis.setTextSize(12f);
+        xAxis.setLabelCount(labels.size());
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1f);
+        xAxis.setGranularityEnabled(true);
+        xAxis.setDrawGridLines(false); // Elimina las líneas de la cuadrícula en el eje X
+
+        YAxis leftAxis = barChart.getAxisLeft();
+        leftAxis.setAxisMinimum(0);
+        leftAxis.setAxisMaximum(10);
+        leftAxis.setLabelCount(11, true);
+        leftAxis.setDrawGridLines(true); // Muestra las líneas de la cuadrícula en el eje Y
+
+        YAxis rightAxis = barChart.getAxisRight();
+        rightAxis.setEnabled(false); // Desactiva el eje Y derecho
+
+        barChart.getDescription().setEnabled(false); // Desactiva la descripción del gráfico
+        barChart.getLegend().setEnabled(true); // Activa la leyenda del gráfico
+        barChart.invalidate(); // Refresca el gráfico
     }
+
 }
 
 

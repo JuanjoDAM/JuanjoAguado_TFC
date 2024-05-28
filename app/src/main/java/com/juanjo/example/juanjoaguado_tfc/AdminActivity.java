@@ -28,7 +28,7 @@ public class AdminActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState); // Corregido el error tipográfico aquí
+        super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_admin);
 
         buttonSeleccionarEmpleado = findViewById(R.id.buttonSeleccionarEmpleado);

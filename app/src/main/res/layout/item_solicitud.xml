@@ -3,40 +3,58 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="@drawable/background_card"
+    android:layout_margin="8dp"
+    android:elevation="4dp">
 
     <TextView
         android:id="@+id/textViewEmail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Email"
-        android:textStyle="bold" />
+        android:textStyle="bold"
+        android:textSize="16sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="4dp"
+        android:layout_gravity="center_horizontal"/>
 
     <TextView
         android:id="@+id/textViewMotivo"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Motivo"
-        android:visibility="gone" />
+        android:visibility="gone"
+        android:textSize="14sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:padding="4dp"
+        android:layout_gravity="center_horizontal"/>
 
     <LinearLayout
         android:id="@+id/estadoContainer"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:visibility="gone">
+        android:visibility="gone"
+        android:padding="4dp"
+        android:layout_gravity="center_horizontal"
+        android:gravity="center_vertical">
 
         <TextView
             android:id="@+id/textViewEstado"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Estado" />
+            android:text="Estado"
+            android:textSize="14sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:padding="4dp"/>
 
         <ImageView
             android:id="@+id/imageViewEstado"
             android:layout_width="24dp"
-            android:layout_height="20dp"
-            android:layout_marginStart="8dp" />
+            android:layout_height="24dp"
+            android:layout_marginStart="8dp"
+            android:contentDescription="Estado"/>
     </LinearLayout>
 </LinearLayout>
 

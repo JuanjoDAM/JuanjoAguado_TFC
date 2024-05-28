@@ -3,33 +3,71 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_general"
     tools:context=".AdminActivity">
 
+    <!-- Título indicando el modo administrador -->
+    <TextView
+        android:id="@+id/textViewAdminMode"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="32dp"
+        android:text="Modo Administrador"
+        android:textColor="@android:color/white"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
+    <!-- Botón para subir nómina -->
     <Button
         android:id="@+id/buttonSeleccionarEmpleado"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Subir Nomina"
+        android:layout_below="@id/textViewAdminMode"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="24dp"
+        android:backgroundTint="@android:color/holo_blue_light"
+        android:padding="12dp"
+        android:text="Subir Nómina"
+        android:textColor="@android:color/white" />
 
+    <!-- Botón para ver solicitudes -->
     <Button
         android:id="@+id/buttonVerSolicitudes"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ver Solicitudes"
         android:layout_below="@id/buttonSeleccionarEmpleado"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/holo_green_light"
+        android:padding="12dp"
+        android:text="Ver Solicitudes"
+        android:textColor="@android:color/white" />
 
+    <!-- Botón para ver datos personales -->
     <Button
         android:id="@+id/buttonVerUsuarios"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Ver Datos Personales"
         android:layout_below="@id/buttonVerSolicitudes"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"/>
+        android:layout_marginTop="16dp"
+        android:backgroundTint="@android:color/holo_orange_light"
+        android:padding="12dp"
+        android:text="Ver Datos Personales"
+        android:textColor="@android:color/white" />
+
+    <!-- Pie de página -->
+    <TextView
+        android:id="@+id/textViewFooter"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="16dp"
+        android:text="Conectado como Administrador"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 </RelativeLayout>
 
 

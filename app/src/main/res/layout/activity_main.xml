@@ -1,85 +1,123 @@
 <?xml version="1.0" encoding="utf-8"?>
-
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_general"
     android:padding="16dp"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageViewProfile"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:layout_centerHorizontal="true"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="16dp"
-        android:src="@drawable/ic_accepted"
-        android:background="@drawable/borde_negro"
-        android:scaleType="centerCrop"
-        android:elevation="4dp"/>
-
-    <Button
-        android:id="@+id/buttonRegistrarHoras"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Registrar Horas"
-        android:layout_below="@id/imageViewProfile"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:padding="12dp"
-        android:elevation="4dp"/>
-
-    <Button
-        android:id="@+id/buttonBajasVacaciones"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Bajas y Vacaciones"
-        android:layout_below="@id/buttonRegistrarHoras"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:padding="12dp"
-        android:elevation="4dp"/>
-
-    <Button
-        android:id="@+id/buttonNominas"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Nóminas"
-        android:layout_below="@id/buttonBajasVacaciones"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:padding="12dp"
-        android:elevation="4dp"/>
-
-    <Button
-        android:id="@+id/buttonDatosPersonales"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Datos Personales"
-        android:layout_below="@id/buttonNominas"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="16dp"
-        android:backgroundTint="@color/colorPrimary"
-        android:textColor="@android:color/white"
-        android:padding="12dp"
-        android:elevation="4dp"/>
-
-    <com.github.mikephil.charting.charts.BarChart
-        android:id="@+id/barChart"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_below="@id/buttonDatosPersonales"
-        android:layout_alignParentBottom="true"
-        android:layout_marginTop="16dp"
-        android:layout_weight="1"/>
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/imageViewProfile"
+                android:layout_width="100dp"
+                android:layout_height="100dp"
+                android:layout_gravity="center"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:background="@drawable/common_google_signin_btn_icon_dark_focused"
+                android:elevation="4dp"
+                android:scaleType="centerCrop"
+                android:src="@drawable/icono" />
+
+            <com.github.mikephil.charting.charts.BarChart
+                android:id="@+id/barChart"
+                android:layout_width="match_parent"
+                android:layout_height="400dp"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonRegistrarHoras"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/holo_blue_light"
+                    android:drawablePadding="8dp"
+                    android:elevation="8dp"
+                    android:padding="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="Registrar Horas"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/buttonBajasVacaciones"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/holo_green_light"
+                    android:drawablePadding="8dp"
+                    android:elevation="8dp"
+                    android:padding="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="Bajas y Vacaciones"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/buttonNominas"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/holo_orange_light"
+                    android:drawablePadding="8dp"
+                    android:elevation="8dp"
+                    android:padding="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="Nóminas"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+
+                <Button
+                    android:id="@+id/buttonDatosPersonales"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="8dp"
+                    android:layout_weight="1"
+                    android:backgroundTint="@android:color/holo_red_light"
+                    android:drawablePadding="8dp"
+                    android:elevation="8dp"
+                    android:padding="12dp"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:text="Datos Personales"
+                    android:textColor="@android:color/white"
+                    android:textStyle="bold" />
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
 </RelativeLayout>
+
 
 
 

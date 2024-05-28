@@ -6,15 +6,32 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/fondo_general"
     android:orientation="vertical"
-    tools:context=".SeleccionarEmpleadoActivity">
+    tools:context=".SeleccionarEmpleadoActivity"
+    android:padding="16dp">
 
+    <!-- Título -->
+    <TextView
+        android:id="@+id/textViewTitulo"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Seleccionar Empleado"
+        android:textSize="24sp"
+        android:textColor="@color/colorPrimaryDark"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginBottom="16dp"
+        android:textStyle="bold" />
+
+    <!-- RecyclerView -->
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recyclerViewEmpleados"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_margin="16dp" />
-
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scrollbars="vertical"
+        android:fadingEdgeLength="50dp"
+        android:overScrollMode="always" />
 </LinearLayout>
 
 

@@ -1,73 +1,103 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:background="@color/white">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="16dp"
+        android:background="@drawable/fondo_layout">
 
-    <RadioGroup
-        android:id="@+id/radioGroupTipo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:layout_marginBottom="16dp">
-
-        <RadioButton
-            android:id="@+id/radioButtonBaja"
+        <TextView
+            android:id="@+id/textViewTitulo"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Baja" />
+            android:text="Solicitud de Baja o Vacaciones"
+            android:textSize="24sp"
+            android:textColor="@color/colorPrimaryDark"
+            android:layout_gravity="center"
+            android:layout_marginBottom="16dp" />
 
-        <RadioButton
-            android:id="@+id/radioButtonVacaciones"
-            android:layout_width="wrap_content"
+        <RadioGroup
+            android:id="@+id/radioGroupTipo"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Vacaciones" />
-    </RadioGroup>
+            android:orientation="horizontal"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/border_radio_group"
+            android:padding="16dp">
 
-    <DatePicker
-        android:id="@+id/datePickerInicio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        android:datePickerMode="calendar"
-        android:layout_marginBottom="16dp"/>
+            <RadioButton
+                android:id="@+id/radioButtonBaja"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Baja"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryDark" />
 
-    <DatePicker
-        android:id="@+id/datePickerFin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:calendarViewShown="false"
-        android:datePickerMode="calendar"
-        android:layout_marginBottom="16dp"/>
+            <RadioButton
+                android:id="@+id/radioButtonVacaciones"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="Vacaciones"
+                android:textSize="18sp"
+                android:textColor="@color/colorPrimaryDark" />
+        </RadioGroup>
+
+        <DatePicker
+            android:id="@+id/datePickerInicio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="true"
+            android:datePickerMode="calendar"
+            android:layout_marginBottom="16dp"/>
+
+        <DatePicker
+            android:id="@+id/datePickerFin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:calendarViewShown="true"
+            android:datePickerMode="calendar"
+            android:layout_marginBottom="16dp"/>
 
         <EditText
             android:id="@+id/editTextMotivo"
             android:layout_width="match_parent"
-            android:layout_height="49dp"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="16dp"
             android:gravity="start|top"
             android:hint="Motivo de la solicitud"
             android:inputType="textMultiLine"
-            android:minLines="3" />
+            android:minLines="3"
+            android:background="@drawable/edit_text_background"
+            android:padding="10dp" />
 
         <Button
-        android:id="@+id/buttonEnviar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Enviar solicitud"/>
+            android:id="@+id/buttonEnviar"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:text="Enviar solicitud"
+            android:backgroundTint="@color/colorPrimary"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:padding="12dp"/>
 
         <Button
             android:id="@+id/buttonVerSolicitudes"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Ver solicitudes"/>
-
-
+            android:text="Ver solicitudes"
+            android:backgroundTint="@color/colorPrimaryDark"
+            android:textColor="@android:color/white"
+            android:textSize="16sp"
+            android:padding="12dp"/>
 
     </LinearLayout>
-</ScrollView>
+</androidx.core.widget.NestedScrollView>
+
