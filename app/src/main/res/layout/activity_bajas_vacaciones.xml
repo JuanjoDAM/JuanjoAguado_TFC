@@ -45,17 +45,17 @@
         android:datePickerMode="calendar"
         android:layout_marginBottom="16dp"/>
 
-    <EditText
-        android:id="@+id/editTextMotivo"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:hint="Motivo de la solicitud"
-        android:inputType="textMultiLine"
-        android:minLines="3"
-        android:gravity="start|top"
-        android:layout_marginBottom="16dp"/>
+        <EditText
+            android:id="@+id/editTextMotivo"
+            android:layout_width="match_parent"
+            android:layout_height="49dp"
+            android:layout_marginBottom="16dp"
+            android:gravity="start|top"
+            android:hint="Motivo de la solicitud"
+            android:inputType="textMultiLine"
+            android:minLines="3" />
 
-    <Button
+        <Button
         android:id="@+id/buttonEnviar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

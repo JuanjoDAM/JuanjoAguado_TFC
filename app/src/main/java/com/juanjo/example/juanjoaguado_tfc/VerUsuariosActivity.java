@@ -65,7 +65,7 @@ public class VerUsuariosActivity extends AppCompatActivity implements UsuariosAd
     @Override
     public void onItemClick(int position) {
         String correoSeleccionado = listaCorreosUsuarios.get(position);
-        DatosPersonalesDialog dialogFragment = new DatosPersonalesDialog(true);
+        DatosPersonalesDialog dialogFragment = new DatosPersonalesDialog(true); // true para administrador
         Bundle args = new Bundle();
         args.putString("email", correoSeleccionado);
         dialogFragment.setArguments(args);

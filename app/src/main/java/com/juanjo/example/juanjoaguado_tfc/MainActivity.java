@@ -74,30 +74,29 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void mostrarDialogoDatosPersonales() {
-        DialogFragment dialogFragment = new DatosPersonalesDialog(false);
-        dialogFragment.show(getSupportFragmentManager(), "DatosPersonalesDialog");
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+        if (currentUser != null) {
+            DialogFragment dialogFragment = new DatosPersonalesDialog(false); // Para usuarios normales
+            dialogFragment.show(getSupportFragmentManager(), "DatosPersonalesDialog");
+        }
     }
 
     private void cargarHorasTrabajadas() {
         FirebaseUser currentUser = mAuth.getCurrentUser();
         if (currentUser != null) {
-            String userId = currentUser.getUid();
             String userEmail = currentUser.getEmail().replace(".", "_");
-            databaseReference.orderByKey().startAt("01-05-2024_" + userEmail).endAt("31-05-2024_" + userEmail)
+            databaseReference.orderByKey()
                     .addValueEventListener(new ValueEventListener() {
                         @Override
                         public void onDataChange(@NonNull DataSnapshot snapshot) {
                             Map<String, Float> horasTrabajadasPorDia = new HashMap<>();
                             for (DataSnapshot dataSnapshot : snapshot.getChildren()) {
                                 HorasTrabajo horasTrabajo = dataSnapshot.getValue(HorasTrabajo.class);
-                                if (horasTrabajo != null) {
+                                if (horasTrabajo != null && horasTrabajo.getId().contains(userEmail)) {
                                     String fecha = horasTrabajo.getId().split("_")[0];
                                     float horasTrabajadas = calcularHorasTrabajadas(horasTrabajo.getStartTime(), horasTrabajo.getEndTime(), horasTrabajo.getBreakHours());
-                                    if (horasTrabajadasPorDia.containsKey(fecha)) {
-                                        horasTrabajadasPorDia.put(fecha, horasTrabajadasPorDia.get(fecha) + horasTrabajadas);
-                                    } else {
-                                        horasTrabajadasPorDia.put(fecha, horasTrabajadas);
-                                    }
+                                    // Sobrescribir las horas trabajadas para cada día
+                                    horasTrabajadasPorDia.put(fecha, horasTrabajadas);
                                 }
                             }
                             mostrarGrafico(horasTrabajadasPorDia);
@@ -151,4 +150,5 @@ public class MainActivity extends AppCompatActivity {
         barChart.invalidate(); // Refresh chart
     }
 }
+
 

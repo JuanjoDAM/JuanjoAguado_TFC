@@ -8,8 +8,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 
 public class AuthManager {
     private static final String TAG = "AuthManager";
@@ -62,7 +66,25 @@ public class AuthManager {
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             // Inicio de sesión exitoso
-                            callback.onSuccess();
+                            String emailKey = email.replace(".", "_").replace("#", "_").replace("$", "_").replace("[", "_").replace("]", "_");
+                            mDatabase.child("denegados").child(emailKey).addListenerForSingleValueEvent(new ValueEventListener() {
+                                @Override
+                                public void onDataChange(@NonNull DataSnapshot snapshot) {
+                                    if (snapshot.exists()) {
+                                        // Usuario está en la lista de denegados
+                                        mAuth.signOut();
+                                        callback.onError("Este usuario ha sido eliminado.");
+                                    } else {
+                                        callback.onSuccess();
+                                    }
+                                }
+
+                                @Override
+                                public void onCancelled(@NonNull DatabaseError error) {
+                                    Log.e(TAG, "Error al verificar el estado del usuario", error.toException());
+                                    callback.onError("Error al verificar el estado del usuario");
+                                }
+                            });
                         } else {
                             // Error en el inicio de sesión
                             Log.e(TAG, "Fallo en el inicio de sesión", task.getException());
@@ -71,6 +93,9 @@ public class AuthManager {
                     }
                 });
     }
+
+
+
 
     public void enviarRestablecimientoContrasena(String email, final RestablecimientoContrasenaCallback callback) {
         mAuth.sendPasswordResetEmail(email)
@@ -107,6 +132,7 @@ public class AuthManager {
     // Clase Usuario para almacenar información del usuario en Firebase
     public static class Usuario {
         public String email;
+        public Boolean isDeleted;
 
         public Usuario() {
             // Constructor vacío necesario para la deserialización de Firebase
@@ -114,7 +140,10 @@ public class AuthManager {
 
         public Usuario(String email) {
             this.email = email;
+            this.isDeleted = false; // Añadir campo isDeleted y establecerlo como falso por defecto
         }
     }
 }
+
+
 
