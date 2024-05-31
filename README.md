@@ -4,14 +4,10 @@
 SmartStaffManager es una aplicación móvil diseñada para facilitar la gestión interna de recursos humanos en las empresas. La aplicación permite a los empleados registrar sus horas laborales, solicitar vacaciones y bajas, y acceder a sus nóminas de forma segura y eficiente. Los administradores pueden supervisar y gestionar todas estas actividades desde una interfaz centralizada.
 
 ## Capturas de Pantalla
-![Pantalla de Inicio](![pantallainicio](https://github.com/JuanjoDAM/JuanjoAguado_TFC/assets/97904291/02e45ceb-4e8e-49e0-87cd-4d453561ea09)
-)
-![Registro de Horas](![registrarhoras](https://github.com/JuanjoDAM/JuanjoAguado_TFC/assets/97904291/b2d52f57-6fe6-465d-b69c-8681429dcc31)
-)
-![Solicitud de Vacaciones](![solicitudvacaciones](https://github.com/JuanjoDAM/JuanjoAguado_TFC/assets/97904291/1614337b-174d-4ecf-bec9-ee475a1d23b4)
-)
-![Panel del Administrador](![paneladm](https://github.com/JuanjoDAM/JuanjoAguado_TFC/assets/97904291/c43a0dce-e03c-402d-b402-cbc44d65fd8a)
-)
+![Pantalla de Inicio](https://imgur.com/a/GBff5tJ)
+![Registro de Horas](https://imgur.com/a/GBff5tJ)
+![Solicitud de Vacaciones](https://imgur.com/a/GBff5tJ)
+![Panel del Administrador](https://imgur.com/a/GBff5tJ)
 
 
 ## Tutorial de Uso
