@@ -64,4 +64,4 @@ SmartStaffManager es una aplicación móvil diseñada para facilitar la gestión
 Este proyecto está licenciado bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## Contacto
-Para cualquier consulta o soporte, puedes contactarme a través de (juanjoaguadosegovia@gmail.com)[discord](juanjo_i).
+Para cualquier consulta o soporte, puedes contactarme a través de (juanjoaguadosegovia@gmail.com)[discord](juanjo_i)
